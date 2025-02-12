@@ -1,7 +1,6 @@
 import { signal } from "@preact/signals";
 import { createContext } from "preact";
 import { memo, useState } from "preact/compat";
-import { getRandomColor } from "./utils";
 
 const signalCount = signal(0);
 const StateContext = createContext(null);
@@ -60,21 +59,3 @@ const SignalDisplay = () => {
   return <div>Signal Value: {signalCount}</div>;
 };
 
-const Container = ({children}) => {
-  const color = getRandomColor();
-  console.log("Container rendered with color:", color);
-  const [renders, setRenders] = useState(0);
-
-  useEffect(() => {
-    setRenders(prev => prev + 1);
-  }, [children]);
-
-  return (
-    <div className="container" style={{backgroundColor: color}}>
-      Number of renders: {renders}
-      <div className="container">
-      {children}
-      </div>
-    </div>
-  )
-}
