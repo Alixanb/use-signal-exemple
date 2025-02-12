@@ -77,6 +77,12 @@ button:focus-visible {
 
 .app {
   padding: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.app>div {
+  flex: 1;
 }
 
 .demo-section {
