@@ -16,7 +16,7 @@ export function App() {
         {/* State Example */}
         <div className="demo-section">
           <h2>useState Example</h2>
-          <ExpensiveTree count={stateCount} />
+          <ExpensiveTreeState count={stateCount} />
           <button onClick={() => setStateCount(c => c + 1)}>
             Increment State ({stateCount})
           </button>
@@ -25,37 +25,51 @@ export function App() {
         {/* Signal Example */}
         <div className="demo-section">
           <h2>Signal Example</h2>
-          <ExpensiveTree />
+          <ExpensiveTreeSignal />
           <button onClick={() => signalCount.value++}>
             Increment Signal ({signalCount.value})
           </button>
-          <SignalDisplay />
         </div>
       </div>
     </StateContext.Provider>
   );
 }
 
-const ExpensiveTree = memo(({ count }) => {
-  console.log("ExpensiveTree rendered");
+// USE STATE
+
+const ExpensiveTreeState = memo(({ count }) => {
+  console.log("ExpensiveTreeState rendered");
   return (
     <div className="tree">
-      <ExpensiveComponent />
-      <ExpensiveComponent />
-      <ExpensiveComponent />
+      <ExpensiveComponentState count={count} />
+      <ExpensiveComponentState count={count} />
+      <ExpensiveComponentState count={count} />
     </div>
   );
 });
 
-const ExpensiveComponent = () => {
-  console.log("ExpensiveComponent rendered");
+const ExpensiveComponentState = ({count}) => {
+  console.log("ExpensiveComponentState rendered");
   const startTime = performance.now();
   while (performance.now() - startTime < 100) {
   }
-  return <div className="expensive">Expensive Component</div>;
+  return <div className="expensive">Expensive Component {count}</div>;
 };
 
-const SignalDisplay = () => {
-  return <div>Signal Value: {signalCount}</div>;
-};
+// USE SIGNAL
 
+const ExpensiveTreeSignal = memo(() => {
+  console.log("ExpensiveTreeSignal rendered");
+  return (
+    <div className="tree">
+      <ExpensiveComponentSignal />
+      <ExpensiveComponentSignal />
+      <ExpensiveComponentSignal />
+    </div>
+  );
+});
+
+const ExpensiveComponentSignal = () => {
+  console.log("ExpensiveComponentSignal rendered");
+  return <div className="expensive">Expensive Component {signalCount.value}</div>;
+};
